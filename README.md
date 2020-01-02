@@ -2,9 +2,9 @@
 Samples of Wiremock stubs that uses response templates and body transformers.
 
 
-Wiremock Docker source: https://github.com/rodolpheche/wiremock-docker
+##Wiremock Docker: [source](https://github.com/rodolpheche/wiremock-docker)
 
-Ready to start docker command (shell script) and docker compose that:
+###Ready to start docker command (shell script) and docker compose that:
 - starts Wiremock Docker on port 8090
 - starts Wiremock Docker with an option of templating enabled globally
 - runs Wiremock server with verbose option which makes that you can see details of Wiremock server when it receives requests 
@@ -12,7 +12,7 @@ Ready to start docker command (shell script) and docker compose that:
 - maps local subdirectory ./extensions with Java JARs which are extension plugins for Wiremock (in this repo you'll find a JAR with BodyTransformers)
 
 
-This repo contains sample stubs that show few examples how to use templating:
+###This repo contains sample stubs that show few examples how to use templating:
 - /test/response-templates - standard built in Wiremock server templates that allow to use values in response taken from request or generated from time or randomly (described on Wiremock server page: http://wiremock.org/docs/response-templating/)
 - /test/body-transformers/transform - shows usage of the transformer included in extensions, in this case it's BodyTransformer
 - /test/body-transformers - another example of using BodyTransformer (from extensions)
@@ -24,9 +24,11 @@ Detailed description how BodyTransformer extension works you'll find in the sour
 
 After the Wiremock Docker starts sample endpoints are available on local URL: http://localhost:8090
 
-===============
+###===============
+
 For example, you can call a mocked endpoint as such:
 
+```
 curl --location --request POST 'http://localhost:8090/test/response-templates?siteGuid=abc234234&losReferenceId=swerwer' \
 --header 'x-site-guid: xxx-999-aaa3-434' \
 --header 'Content-Type: application/json' \
@@ -36,8 +38,10 @@ curl --location --request POST 'http://localhost:8090/test/response-templates?si
     "inner": "Stuff"
   }
 }'
+```
 
 In response you'll get body as such:
+```
 {
     "request": {
         "url": "/test/response-templates?siteGuid&#x3D;abc234234&amp;losReferenceId&#x3D;swerwer",
@@ -79,10 +83,11 @@ In response you'll get body as such:
         "myDateFromHeader-Format_yyyy-mm-dd": "2019-12-01T00:00:00Z"
     }
 }
-
+```
 
 Another sample call is for the sample endpoint that uses BodyTransformer to build the response:
 
+```
 curl --location --request POST 'http://localhost:8090/test/body-transformers/transform?fooo=barr&bazz=bak' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -90,8 +95,10 @@ curl --location --request POST 'http://localhost:8090/test/body-transformers/tra
     "foo": "abc",
     "baz": "xyz"
 }'
+```
 
 In response you'll get body as such:
+```
 {
     "responseName": "Joe",
     "randomInteger": 1556895382,
@@ -101,3 +108,4 @@ In response you'll get body as such:
     "param1": null,
     "param2": null
 }
+```
