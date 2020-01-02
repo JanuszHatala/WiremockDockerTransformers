@@ -1,0 +1,35 @@
+{
+  "id" : "32c30363-220b-4c1e-a3c3-8f68ca5bcf16",
+  "name" : "test-body-transformers-transform",
+  "request" : {
+    "urlPathPattern" : "/test/body-transformers/transform",
+    "method" : "POST",
+    "queryParameters" : {
+      "fooo" : {
+        "matches" : "^([a-zA-Z0-9]+)$"
+      },
+      "bazz" : {
+        "matches" : "^([a-zA-Z0-9]+)$"
+      }
+    },
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : "$.name"
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"responseName\":\"$(name)\",\"randomInteger\":$(!RandomInteger),\"msg\":\"This is a json response file\",\"foo\":\"$(foo)\",\"baz\":\"$(baz)\",\"param1\":$(fooo),\"param2\":$(bazz)}",
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "transformers" : [ "body-transformer" ]
+  },
+  "uuid" : "32c30363-220b-4c1e-a3c3-8f68ca5bcf16",
+  "metadata" : {
+    "serviceName" : "JH test",
+    "originalBaseUrl" : "https://myserver.com",
+    "stubPrefixPath" : "",
+    "endpointPath" : "/body-transformers/transfomr"
+  },
+  "insertionIndex" : 2
+}

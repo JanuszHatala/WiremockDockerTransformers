@@ -1,0 +1,99 @@
+Wiremock Docker source: https://github.com/rodolpheche/wiremock-docker
+
+Ready to start docker command (shell script) and docker compose that:
+- starts Wiremock Docker on port 8090
+- starts Wiremock Docker with an option of templating enabled globally
+- runs Wiremock server with verbose option which makes that you can see details of Wiremock server when it receives requests 
+- maps local subdirectory ./stubs with docker directory that contains stored stubs
+- maps local subdirectory ./extensions with Java JARs which are extension plugins for Wiremock (in this repo you'll find a JAR with BodyTransformers)
+
+
+This repo contains sample stubs that show few examples how to use templating:
+- /test/response-templates - standard built in Wiremock server templates that allow to use values in response taken from request or generated from time or randomly (described on Wiremock server page: http://wiremock.org/docs/response-templating/)
+- /test/body-transformers/transform - shows usage of the transformer included in extensions, in this case it's BodyTransformer
+- /test/body-transformers - another example of using BodyTransformer (from extensions)
+
+In 'extensions' subdirectory there is a JAR taken from this link:
+https://github.com/opentable/wiremock-body-transformer/releases/download/wiremock-body-transformer-1.1.6/wiremock-body-transformer-1.1.6.jar
+
+Detailed description how BodyTransformer extension works you'll find in the source GIT repository of the Wiremock Docker (see above)
+
+After the Wiremock Docker starts sample endpoints are available on local URL: http://localhost:8090
+
+===============
+For example, you can call a mocked endpoint as such:
+
+curl --location --request POST 'http://localhost:8090/test/response-templates?siteGuid=abc234234&losReferenceId=swerwer' \
+--header 'x-site-guid: xxx-999-aaa3-434' \
+--header 'Content-Type: application/json' \
+--header 'MyDate: 2019-12-02' \
+--data-raw '{
+  "outer": {
+    "inner": "Stuff"
+  }
+}'
+
+In response you'll get body as such:
+{
+    "request": {
+        "url": "/test/response-templates?siteGuid&#x3D;abc234234&amp;losReferenceId&#x3D;swerwer",
+        "path": "/test/response-templates?siteGuid&#x3D;abc234234&amp;losReferenceId&#x3D;swerwer",
+        "pathSegment": "response-templates",
+        "query": "{siteGuid&#x3D;abc234234, losReferenceId&#x3D;swerwer}",
+        "querySiteGuid": "abc234234",
+        "method": "POST",
+        "host": "localhost",
+        "port": "8090",
+        "scheme": "http",
+        "baseUrl": "http://localhost:8090",
+        "headers": "{MyDate&#x3D;2019-12-02, Accept&#x3D;*/*, Cache-Control&#x3D;no-cache, x-site-guid&#x3D;xxx-999-aaa3-434, User-Agent&#x3D;PostmanRuntime/7.21.0, Connection&#x3D;keep-alive, Host&#x3D;localhost:8090, Accept-Encoding&#x3D;gzip, deflate, Content-Length&#x3D;41, Content-Type&#x3D;application/json}",
+        "headerXSiteGuid": "xxx-999-aaa3-434"
+    },
+    "random": {
+        "guid": "79feb1d6-ea3c-447b-a759-28ffef343e77",
+        "alphanumeric": "yfypf3ewwk1mptnj3qoznvoopxncgl2yi",
+        "upperCase": "ND7K7MZEYQOU",
+        "alphabetic": "mwmxmxvhyhaebhdapnjkcsvlvxpaszrspprrpypbpnuqcmajjxpoixy",
+        "alphabeticUppoerCase": "UQLHKKLVUWCNBRMXGVXGTJVHVMF",
+        "numeric": "6370625455",
+        "alphabeticAndSymbols": "𣗕🈓䗋"
+    },
+    "assignments": {
+        "capitalizedSiteGuidByAssignment": "Abc234234"
+    },
+    "json": {
+        "requestBody-jsonPath": "Stuff"
+    },
+    "dateTime": {
+        "now": "2020-01-02T21:48:51Z",
+        "nowOffset3days": "2020-01-05T21:48:51Z",
+        "nowOffset-24sec": "2020-01-02T21:48:27Z",
+        "nowOffset1year": "2021-01-02T21:48:51Z",
+        "nowOffset10yearsFormatted": "2030-01-02",
+        "nowOffset2yearsFormatEpoch": "1641160131891",
+        "nowOffset2yearsFormatUnix": "1641160131",
+        "myDateFromHeader-Format_yyyy-mm-dd": "2019-12-01T00:00:00Z"
+    }
+}
+
+
+Another sample call is for the sample endpoint that uses BodyTransformer to build the response:
+
+curl --location --request POST 'http://localhost:8090/test/body-transformers/transform?fooo=barr&bazz=bak' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "Joe",
+    "foo": "abc",
+    "baz": "xyz"
+}'
+
+In response you'll get body as such:
+{
+    "responseName": "Joe",
+    "randomInteger": 1556895382,
+    "msg": "This is a json response file",
+    "foo": "abc",
+    "baz": "xyz",
+    "param1": null,
+    "param2": null
+}

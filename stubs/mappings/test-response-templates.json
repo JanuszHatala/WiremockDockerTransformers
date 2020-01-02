@@ -1,0 +1,77 @@
+{
+  "id" : "0cde4065-8b89-40b4-9205-27b6257d00df",
+  "name" : "test-response-templates",
+  "request" : {
+    "urlPathPattern" : "/test/response-templates",
+    "method" : "POST",
+    "headers" : {
+      "x-site-guid" : {
+        "matches" : "^$|([a-z0-9\\-]*)"
+      }
+    },
+    "queryParameters" : {
+      "siteGuid" : {
+        "matches" : "^([a-z0-9\\-]*)$"
+      },
+      "losReferenceId" : {
+        "matches" : "^([a-z0-9\\-]*)$"
+      }
+    }
+  },
+  "response" : {
+    "status" : 200,
+    "jsonBody" : {
+      "request" : {
+        "url" : "{{request.url}}",
+        "path" : "{{request.requestLine.path}}",
+        "pathSegment" : "{{request.requestLine.pathSegments.[1]}}",
+        "query" : "{{request.requestLine.query}}",
+        "querySiteGuid" : "{{request.requestLine.query.siteGuid}}",
+        "method" : "{{request.requestLine.method}}",
+        "host" : "{{request.requestLine.host}}",
+        "port" : "{{request.requestLine.port}}",
+        "scheme" : "{{request.requestLine.scheme}}",
+        "baseUrl" : "{{request.requestLine.baseUrl}}",
+        "headers" : "{{request.headers}}",
+        "headerXSiteGuid" : "{{request.headers.x-site-guid}}"
+      },
+      "random" : {
+        "guid" : "{{randomValue type='UUID'}}",
+        "alphanumeric" : "{{randomValue length=33 type='ALPHANUMERIC'}}",
+        "upperCase" : "{{randomValue length=12 type='ALPHANUMERIC' uppercase=true}}",
+        "alphabetic" : "{{randomValue length=55 type='ALPHABETIC'}}",
+        "alphabeticUppoerCase" : "{{randomValue length=27 type='ALPHABETIC' uppercase=true}}",
+        "numeric" : "{{randomValue length=10 type='NUMERIC'}}",
+        "alphabeticAndSymbols" : "{{randomValue length=5 type='ALPHANUMERIC_AND_SYMBOLS'}}"
+      },
+      "assignments" : {
+        "capitalizedSiteGuidByAssignment" : "{{#assign 'myCapitalisedQuery'}}{{capitalize request.query.siteGuid}}{{/assign}}{{myCapitalisedQuery}}"
+      },
+      "json" : {
+        "requestBody-jsonPath" : "{{jsonPath request.body '$.outer.inner'}}"
+      },
+      "dateTime" : {
+        "now" : "{{now}}",
+        "nowOffset3days" : "{{now offset='3 days'}}",
+        "nowOffset-24sec" : "{{now offset='-24 seconds'}}",
+        "nowOffset1year" : "{{now offset='1 years'}}",
+        "nowOffset10yearsFormatted" : "{{now offset='10 years' format='yyyy-MM-dd'}}",
+        "nowOffset2yearsFormatEpoch" : "{{now offset='2 years' format='epoch'}}",
+        "nowOffset2yearsFormatUnix" : "{{now offset='2 years' format='unix'}}",
+        "myDateFromHeader-Format_yyyy-mm-dd" : "{{date (parseDate request.headers.MyDate) offset='-1 days'}}"
+      }
+    },
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "transformers" : [ "response-template" ]
+  },
+  "uuid" : "0cde4065-8b89-40b4-9205-27b6257d00df",
+  "metadata" : {
+    "serviceName" : "TEST",
+    "originalBaseUrl" : "",
+    "stubPrefixPath" : "/test",
+    "endpointPath" : "/response-templates"
+  },
+  "insertionIndex" : 16
+}

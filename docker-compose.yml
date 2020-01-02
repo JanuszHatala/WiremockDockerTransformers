@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  wiremock-ex:
+    container_name: wiremock-ex
+    hostname: wiremock-ex
+    image: rodolpheche/wiremock:latest
+    restart: "no"
+    ports:
+      - "8090:8080"
+    volumes:
+       - $PWD/extensions:/var/wiremock/extensions:ro
+       - $PWD/stubs:/home/wiremock
+    command:
+      --extensions com.opentable.extension.BodyTransformer
+      --verbose
+      --global-response-templating
