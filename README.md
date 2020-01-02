@@ -5,24 +5,24 @@ Samples of Wiremock stubs that uses response templates and body transformers.
 ## Wiremock Docker: [source](https://github.com/rodolpheche/wiremock-docker)
 
 ### Ready to start docker command (shell script) and docker compose that:
-- starts Wiremock Docker on port 8090
+- starts Wiremock Docker on port `8090`
 - starts Wiremock Docker with an option of templating enabled globally
 - runs Wiremock server with verbose option which makes that you can see details of Wiremock server when it receives requests 
-- maps local subdirectory ./stubs with docker directory that contains stored stubs
-- maps local subdirectory ./extensions with Java JARs which are extension plugins for Wiremock (in this repo you'll find a JAR with BodyTransformers)
+- maps local subdirectory `./stubs` with docker directory that contains stored stubs
+- maps local subdirectory `./extensions` with Java JARs which are extension plugins for Wiremock (in this repo you'll find a JAR with BodyTransformers)
 
 
 ### This repo contains sample stubs that show few examples how to use templating:
-- /test/response-templates - standard built in Wiremock server templates that allow to use values in response taken from request or generated from time or randomly (described on Wiremock server page: http://wiremock.org/docs/response-templating/)
-- /test/body-transformers/transform - shows usage of the transformer included in extensions, in this case it's BodyTransformer
-- /test/body-transformers - another example of using BodyTransformer (from extensions)
+- `/test/response-templates` - standard built in Wiremock server templates that allow to use values in response taken from request or generated from time or randomly (described on Wiremock server page: http://wiremock.org/docs/response-templating/)
+- `/test/body-transformers/transform` - shows usage of the transformer included in extensions, in this case it's BodyTransformer
+- `/test/body-transformers` - another example of using BodyTransformer (from extensions)
 
-In 'extensions' subdirectory there is a JAR taken from this link:
+In `extensions` subdirectory there is a JAR taken from this link:
 https://github.com/opentable/wiremock-body-transformer/releases/download/wiremock-body-transformer-1.1.6/wiremock-body-transformer-1.1.6.jar
 
 Detailed description how BodyTransformer extension works you'll find in the source GIT repository of the Wiremock Docker (see above)
 
-After the Wiremock Docker starts sample endpoints are available on local URL: http://localhost:8090
+After the Wiremock Docker starts sample endpoints are available on local URL: `http://localhost:8090`
 
 ### ===============
 
