@@ -5,7 +5,7 @@ Samples of Wiremock stubs that uses response templates and body transformers.
 ## Wiremock Docker: [source](https://github.com/rodolpheche/wiremock-docker)
 
 ### Ready to start docker command (shell script) and docker compose that:
-- starts Wiremock Docker on port `8090`
+- starts Wiremock Docker on port `8091`
 - starts Wiremock Docker with an option of templating enabled globally
 - runs Wiremock server with verbose option which makes that you can see details of Wiremock server when it receives requests 
 - maps local subdirectory `./stubs` with docker directory that contains stored stubs
@@ -22,14 +22,14 @@ https://github.com/opentable/wiremock-body-transformer/releases/download/wiremoc
 
 Detailed description how BodyTransformer extension works you'll find in the source GIT repository of the Wiremock Docker (see above)
 
-After the Wiremock Docker starts sample endpoints are available on local URL: `http://localhost:8090`
+After the Wiremock Docker starts sample endpoints are available on local URL: `http://localhost:8091`
 
 ### ===============
 
 For example, you can call a mocked endpoint as such:
 
 ```
-curl --location --request POST 'http://localhost:8090/test/response-templates?siteGuid=abc234234&losReferenceId=swerwer' \
+curl --location --request POST 'http://localhost:8091/test/response-templates?siteGuid=abc234234&losReferenceId=swerwer' \
 --header 'x-site-guid: xxx-999-aaa3-434' \
 --header 'Content-Type: application/json' \
 --header 'MyDate: 2019-12-02' \
@@ -51,10 +51,10 @@ In response you'll get body as such:
         "querySiteGuid": "abc234234",
         "method": "POST",
         "host": "localhost",
-        "port": "8090",
+        "port": "8091",
         "scheme": "http",
-        "baseUrl": "http://localhost:8090",
-        "headers": "{MyDate&#x3D;2019-12-02, Accept&#x3D;*/*, Cache-Control&#x3D;no-cache, x-site-guid&#x3D;xxx-999-aaa3-434, User-Agent&#x3D;PostmanRuntime/7.21.0, Connection&#x3D;keep-alive, Host&#x3D;localhost:8090, Accept-Encoding&#x3D;gzip, deflate, Content-Length&#x3D;41, Content-Type&#x3D;application/json}",
+        "baseUrl": "http://localhost:8091",
+        "headers": "{MyDate&#x3D;2019-12-02, Accept&#x3D;*/*, Cache-Control&#x3D;no-cache, x-site-guid&#x3D;xxx-999-aaa3-434, User-Agent&#x3D;PostmanRuntime/7.21.0, Connection&#x3D;keep-alive, Host&#x3D;localhost:8091, Accept-Encoding&#x3D;gzip, deflate, Content-Length&#x3D;41, Content-Type&#x3D;application/json}",
         "headerXSiteGuid": "xxx-999-aaa3-434"
     },
     "random": {
@@ -88,7 +88,7 @@ In response you'll get body as such:
 Another sample call is for the sample endpoint that uses BodyTransformer to build the response:
 
 ```
-curl --location --request POST 'http://localhost:8090/test/body-transformers/transform?fooo=barr&bazz=bak' \
+curl --location --request POST 'http://localhost:8091/test/body-transformers/transform?fooo=barr&bazz=bak' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "Joe",

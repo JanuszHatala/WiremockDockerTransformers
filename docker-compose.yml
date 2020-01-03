@@ -6,7 +6,7 @@ services:
     image: rodolpheche/wiremock:latest
     restart: "no"
     ports:
-      - "8090:8080"
+      - "8091:8080"
     volumes:
        - $PWD/extensions:/var/wiremock/extensions:ro
        - $PWD/stubs:/home/wiremock
